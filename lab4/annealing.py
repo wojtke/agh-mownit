@@ -3,7 +3,7 @@ from plotly.subplots import make_subplots
 import numpy as np
 
 def anneal(x_0, cost_fun, update_fun, decision_fun=None, T_0=2000,
-     T_change_fun=None, iters=10**3, max_retries=100, verbose=1):
+     T_change_fun=None, iters=10**3, max_retries=100, verbose=1, early_stop_fun=None):
     """Simulated annealing. 
     
     Parameters
@@ -27,6 +27,8 @@ def anneal(x_0, cost_fun, update_fun, decision_fun=None, T_0=2000,
         a step towards higher cost.
     verbose : bool (default true)
         Whether to print updates during the process.
+    early_stop_fun : T, cost - > bool
+        Function with decision whether to stop the process.
 
     Returns
     -------
@@ -66,6 +68,9 @@ def anneal(x_0, cost_fun, update_fun, decision_fun=None, T_0=2000,
             T = T_change_fun(T)
         if verbose:
             print(f'{(i+1)*10}%, iter = {(i+1)*iters//10}, cost = {round(last_cost,2)}, T = {round(T,2)}')
+        if early_stop_fun and early_stop_fun(T, last_cost):
+            print("Stopping!")
+            return x, cost_hist, T_hist
     if verbose:
         print("Finished!")
 

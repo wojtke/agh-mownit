@@ -5,7 +5,7 @@ import numpy as np
 
 save_dir = 'zad2_imgs/'
 
-cost_functions = [cf.cost1, cf.cost2, cf.cost3, cf.cost4, cf.cost5, cf.cost6]
+cost_functions = [cf.cost6]
 densities = [0.2, 0.5, 0.7]
 sizes = [128, 256]
 T_change_functions = [(lambda T:T*0.992),(lambda T:T*0.999)]
@@ -29,6 +29,8 @@ def swap(A, T):
     per = np.random.permutation(len(x))
     A[x,y] = A[x[per],y[per]]
     return A
+
+
 
 if __name__ == '__main__':
 	for c, cost_fun in enumerate(cost_functions):
