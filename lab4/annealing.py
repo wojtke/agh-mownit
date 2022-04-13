@@ -78,9 +78,17 @@ def anneal(x_0, cost_fun, update_fun, decision_fun=None, T_0=2000,
     return x, cost_hist, T_hist
 
 def sigmoid_decision(T):
+    """A function that returns true/false decision based on the
+    temperature. The higher the T, the higher probability
+    of returning true. At T < 5 should only return false.
+    For T>2000 should return true at over 90% rate.
+    """
     return np.tanh((T-750)/500)>2*np.random.random()-0.9
 
 def plot_annealing(cost_hist, T_hist):
+    """Plots cost function values and temperature over
+    the annealing process.
+    """
     assert len(cost_hist) == len(T_hist)
 
     X = list(range(len(cost_hist)))
@@ -92,7 +100,7 @@ def plot_annealing(cost_hist, T_hist):
     fig.update_yaxes(title_text="Temperature", secondary_y=True)
 
     fig.update_layout(
-        height=300,
+        height=200,
         margin=dict(l=50, r=50, t=20, b=20)
     )
 
