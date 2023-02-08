@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Search Engine</title>
+        <link rel="stylesheet" href="{{ url_for('static',filename='style.css') }}">
+    </head>
+
+<body>
+    <main class="results">
+        <h1>Search Results</h1>
+
+        {% for result in search_results %}
+            <div class="result">
+                <div class="flex-row">
+                    <h4><a href="{{url_for('article', id=result['id'])}}">{{ result['title'] }}</a></h4>
+                    <p>Match: {{ "%.4f"|format(result['score']) }}</p>
+                </div>
+                <p>{{ result['text'][:200] }}...</p>
+            </div>
+        {% else %}
+            No results found!
+        {% endfor %}
+    </main>
+</body>
+</html>
